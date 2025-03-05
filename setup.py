@@ -5,4 +5,5 @@ setup(
     version='1.0.2',
     author="Serhii Poprovka",
     packages=find_packages(include=["permission_exchanger", "permission_exchanger.*"]),
+	include_package_data=True,
 )

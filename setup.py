@@ -4,6 +4,6 @@ setup(
 	name='permission_exchanger',
     version='1.0.1',
     author="Serhii Poprovka",
-    packages=find_packages(include=["src", "src.*"]),
+    packages=find_packages(include=["src.permission_exchanger", "src.permission_exchanger.*"]),
     package_dir={'': 'src'},
 )

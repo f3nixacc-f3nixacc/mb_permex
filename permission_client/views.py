@@ -1,10 +1,12 @@
-import requests
-from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.http import JsonResponse
+from django.conf import settings
 
 
 def get_all_permissions(request):
+	if not hasattr(settings, 'SSO_APPLICATION_IDENTIFIER'):
+		return JsonResponse({"success": False, "error": "SSO_APPLICATION_IDENTIFIER settings not set"})
+
 	permissions = Permission.objects.all()
 
 	permissions_data = [
@@ -19,14 +21,5 @@ def get_all_permissions(request):
 		}
 		for perm in permissions
 	]
-
+	permissions_data = {settings.SSO_APPLICATION_IDENTIFIER: permissions_data}
 	return JsonResponse(permissions_data, safe=False)
-
-
-def receive_all_permissions(request):
-	if settings.SSO:
-		response = requests.get(f"https://{settings.SSO['ROOT']}/api/permissions")
-
-		return JsonResponse({"success": True, "res": response.json()})
-
-	return JsonResponse({"success": False})

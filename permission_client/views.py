@@ -36,8 +36,6 @@ def receive_all_permissions(request):
 @csrf_exempt
 def receive_all_teams(request):
 	with open("test.txt", "a") as f:
-		f.write(str(request.data))
-		f.write("\n")
 		f.write(str(request.POST))
 		f.write("\n")
 		f.close()

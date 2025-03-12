@@ -1,6 +1,7 @@
 from django.contrib.auth.models import Permission
 from django.http import JsonResponse
 from django.conf import settings
+from django.views.decorators.http import require_POST
 
 
 def get_all_permissions(request):
@@ -23,3 +24,7 @@ def get_all_permissions(request):
 	]
 	permissions_data = {settings.SSO_APPLICATION_IDENTIFIER: permissions_data}
 	return JsonResponse(permissions_data, safe=False)
+
+@require_POST
+def receive_all_permissions():
+	return {"test":"test"}

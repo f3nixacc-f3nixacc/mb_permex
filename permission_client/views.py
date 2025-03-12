@@ -30,3 +30,9 @@ def get_all_permissions(request):
 @csrf_exempt
 def receive_all_permissions(request):
 	return JsonResponse({"test":"test"})
+
+
+@require_POST
+@csrf_exempt
+def receive_all_teams(request):
+	return JsonResponse({"request.POST":request.POST, "request.data":request.data})

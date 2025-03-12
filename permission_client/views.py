@@ -39,4 +39,4 @@ def receive_all_teams(request):
 		f.write(str(request.POST))
 		f.write("\n")
 		f.close()
-	return JsonResponse({"request.POST":request.POST, "request.data":request.data})
+	return JsonResponse({"request.POST":request.POST})

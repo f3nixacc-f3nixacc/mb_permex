@@ -50,7 +50,7 @@ def receive_teams(request):
 	body = request.body.decode('utf-8')
 	try:
 		json_body = json.loads(body)
-		for team in json_body:
+		for team in json_body["teams"]:
 			Group.objects.get_or_create(name=team)
 		return JsonResponse({"request.POST": json_body})
 	except json.JSONDecodeError:

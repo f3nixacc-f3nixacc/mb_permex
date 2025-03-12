@@ -44,3 +44,14 @@ def receive_team(request):
 		return JsonResponse({"request.POST": json_body})
 	except json.JSONDecodeError:
 		return JsonResponse("Body is not valid JSON!")
+
+
+def receive_teams(request):
+	body = request.body.decode('utf-8')
+	try:
+		json_body = json.loads(body)
+		for team in json_body:
+			Group.objects.get_or_create(name=team)
+		return JsonResponse({"request.POST": json_body})
+	except json.JSONDecodeError:
+		return JsonResponse("Body is not valid JSON!")

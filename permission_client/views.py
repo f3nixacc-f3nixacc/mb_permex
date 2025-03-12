@@ -1,6 +1,6 @@
 import json
 
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, Group
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -36,17 +36,11 @@ def receive_all_permissions(request):
 
 @require_POST
 @csrf_exempt
-def receive_all_teams(request):
+def receive_team(request):
 	body = request.body.decode('utf-8')
-	with open("test.txt", "a") as f:
-		f.write("Raw Body:\n")
-		f.write(body)
-		f.write("\n")
-
 	try:
 		json_body = json.loads(body)
+		Group.objects.get_or_create(name=json_body['team_name'])
 		return JsonResponse({"request.POST": json_body})
 	except json.JSONDecodeError:
-		f.write("Body is not valid JSON!\n")
-
-	return JsonResponse({"request.POST":body})
+		return JsonResponse("Body is not valid JSON!")

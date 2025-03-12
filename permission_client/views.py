@@ -29,4 +29,4 @@ def get_all_permissions(request):
 @require_POST
 @csrf_exempt
 def receive_all_permissions(request):
-	return {"test":"test"}
+	return JsonResponse({"test":"test"})

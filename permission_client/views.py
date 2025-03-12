@@ -1,6 +1,7 @@
 from django.contrib.auth.models import Permission
 from django.http import JsonResponse
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 
@@ -26,5 +27,6 @@ def get_all_permissions(request):
 	return JsonResponse(permissions_data, safe=False)
 
 @require_POST
+@csrf_exempt
 def receive_all_permissions():
 	return {"test":"test"}

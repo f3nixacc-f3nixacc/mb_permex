@@ -28,5 +28,5 @@ def get_all_permissions(request):
 
 @require_POST
 @csrf_exempt
-def receive_all_permissions():
+def receive_all_permissions(request):
 	return {"test":"test"}

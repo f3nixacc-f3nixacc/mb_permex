@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth.models import Permission
 from django.http import JsonResponse
 from django.conf import settings
@@ -35,8 +37,16 @@ def receive_all_permissions(request):
 @require_POST
 @csrf_exempt
 def receive_all_teams(request):
+	body = request.body.decode('utf-8')
 	with open("test.txt", "a") as f:
-		f.write(str(request.POST))
+		f.write("Raw Body:\n")
+		f.write(body)
 		f.write("\n")
-		f.close()
-	return JsonResponse({"request.POST":request.POST})
+
+	try:
+		json_body = json.loads(body)
+		return JsonResponse({"request.POST": json_body})
+	except json.JSONDecodeError:
+		f.write("Body is not valid JSON!\n")
+
+	return JsonResponse({"request.POST":body})

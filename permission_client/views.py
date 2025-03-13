@@ -74,6 +74,8 @@ def receive_team_permissions(request):
 	body = request.body.decode('utf-8')
 	try:
 		json_body = json.loads(body)
+		for item in json_body:
+			raise Exception("Key:", item, "Value:", json_body[item], "")
 		return JsonResponse({"request.POST": json_body})
 	except json.JSONDecodeError:
 		return JsonResponse("Body is not valid JSON!")

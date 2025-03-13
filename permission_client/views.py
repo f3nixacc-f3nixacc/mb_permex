@@ -52,7 +52,14 @@ def receive_teams(request):
 	try:
 		json_body = json.loads(body)
 		for team in json_body["teams"]:
-			Group.objects.get_or_create(name=team)
+			if 'old' in team and 'new' in team:
+				if team['old'] != team['new']:
+					Group.objects.filter(name=team['old']).update(name=team['new'])
+				else:
+					continue
+				Group.objects.get_or_create(name=team['new'])
+			else:
+				Group.objects.get_or_create(name=team['new'])
 		return JsonResponse({"request.POST": json_body})
 	except json.JSONDecodeError:
 		return JsonResponse("Body is not valid JSON!")

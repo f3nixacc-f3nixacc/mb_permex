@@ -76,6 +76,7 @@ def receive_team_permissions(request):
 		json_body = json.loads(body)
 		for item in json_body:
 			group = Group.objects.get(name=item)
+			group.permissions.clear()
 			for permission in json_body[item]:
 				group.permissions.add(Permission.objects.get(codename=permission))
 		return JsonResponse({"request.POST": json_body})

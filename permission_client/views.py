@@ -68,7 +68,8 @@ def receive_teams(request):
 	except json.JSONDecodeError:
 		return JsonResponse("Body is not valid JSON!")
 
-
+@require_POST
+@csrf_exempt
 def receive_team_permissions(request):
 	body = request.body.decode('utf-8')
 	try:

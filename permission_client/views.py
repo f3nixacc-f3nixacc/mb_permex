@@ -75,7 +75,9 @@ def receive_team_permissions(request):
 	try:
 		json_body = json.loads(body)
 		for item in json_body:
-			raise Exception("Key:", item, "Value:", json_body[item], "")
+			group = Group.objects.get(name=item)
+			for permission in json_body[item]:
+				group.permissions.add(Permission.objects.get(codename=permission))
 		return JsonResponse({"request.POST": json_body})
 	except json.JSONDecodeError:
 		return JsonResponse("Body is not valid JSON!")

@@ -52,11 +52,11 @@ def receive_teams(request):
 	try:
 		json_body = json.loads(body)
 		for team in json_body["teams"]:
-			if 'action' in team and team['action'] == 'delete':
-				Group.objects.filter(name=team['name']).delete()
-				continue
-
 			if 'old' in team and 'new' in team:
+				if 'action' in team and team['action'] == 'delete':
+					Group.objects.filter(name=team['new']).delete()
+					continue
+
 				if team['old'] != team['new']:
 					Group.objects.filter(name=team['old']).update(name=team['new'])
 				else:

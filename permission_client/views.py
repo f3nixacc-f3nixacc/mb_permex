@@ -36,41 +36,41 @@ def receive_all_permissions(request):
 
 @require_POST
 @csrf_exempt
-def receive_team(request):
+def receive_permission_group(request):
 	body = request.body.decode('utf-8')
 	try:
 		json_body = json.loads(body)
-		Group.objects.get_or_create(name=json_body['team_name'])
+		Group.objects.get_or_create(name=json_body['permission_group_name'])
 		return JsonResponse({"request.POST": json_body})
 	except json.JSONDecodeError:
 		return JsonResponse("Body is not valid JSON!")
 
 @require_POST
 @csrf_exempt
-def receive_teams(request):
+def receive_permission_groups(request):
 	body = request.body.decode('utf-8')
 	try:
 		json_body = json.loads(body)
-		for team in json_body["teams"]:
-			if 'old' in team and 'new' in team:
-				if 'action' in team and team['action'] == 'delete':
-					Group.objects.filter(name=team['new']).delete()
+		for permission_group in json_body["permission_groups"]:
+			if 'old' in permission_group and 'new' in permission_group:
+				if 'action' in permission_group and permission_group['action'] == 'delete':
+					Group.objects.filter(name=permission_group['new']).delete()
 					continue
 
-				if team['old'] != team['new']:
-					Group.objects.filter(name=team['old']).update(name=team['new'])
+				if permission_group['old'] != permission_group['new']:
+					Group.objects.filter(name=permission_group['old']).update(name=permission_group['new'])
 				else:
 					continue
-				Group.objects.get_or_create(name=team['new'])
+				Group.objects.get_or_create(name=permission_group['new'])
 			else:
-				Group.objects.get_or_create(name=team['new'])
+				Group.objects.get_or_create(name=permission_group['new'])
 		return JsonResponse({"request.POST": json_body})
 	except json.JSONDecodeError:
 		return JsonResponse("Body is not valid JSON!")
 
 @require_POST
 @csrf_exempt
-def receive_team_permissions(request):
+def receive_permission_group_permissions(request):
 	body = request.body.decode('utf-8')
 	try:
 		json_body = json.loads(body)

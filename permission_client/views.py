@@ -51,6 +51,7 @@ def receive_permission_groups(request):
 	body = request.body.decode('utf-8')
 	try:
 		json_body = json.loads(body)
+		print("Permission groups:", json_body["permission_groups"])
 		for permission_group in json_body["permission_groups"]:
 			if 'old' in permission_group and 'new' in permission_group:
 				if 'action' in permission_group and permission_group['action'] == 'delete':

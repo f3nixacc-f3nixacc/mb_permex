@@ -15,7 +15,7 @@ def get_user_groups(request):
 		user = User.objects.get(username=json_body["username"])
 		user.groups.clear()
 		for group in json_body["groups"]:
-			group = Group.objects.get(name=group)
+			group = Group.objects.get_or_create(name=group)
 			user.groups.add(group)
 	except json.JSONDecodeError:
 		return JsonResponse("Body is not valid JSON!")

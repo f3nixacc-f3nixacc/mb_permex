@@ -1,11 +1,24 @@
 import json
 
-from django.contrib.auth.models import Permission, Group
+from django.contrib.auth.models import Permission, Group, User
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+@require_POST
+@csrf_exempt
+def get_user_groups(request):
+	body = request.body.decode('utf-8')
+	try:
+		json_body = json.loads(body)
+		user = User.objects.get(username=json_body["username"])
+		user.groups.clear()
+		for group in json_body["groups"]:
+			group = Group.objects.get(name=group)
+			user.groups.add(group)
+	except json.JSONDecodeError:
+		return JsonResponse("Body is not valid JSON!")
 
 def get_all_permissions(request):
 	if not hasattr(settings, 'SSO_APPLICATION_IDENTIFIER'):

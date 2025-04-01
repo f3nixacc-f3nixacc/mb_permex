@@ -12,7 +12,7 @@ def get_user_groups(request):
 	body = request.body.decode('utf-8')
 	try:
 		json_body = json.loads(body)
-		user = User.objects.get(username=json_body["username"])
+		user = User.objects.get(username=json_body["user"])
 		user.groups.clear()
 		for group in json_body["groups"]:
 			group = Group.objects.get_or_create(name=group)

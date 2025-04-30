@@ -88,6 +88,8 @@ def receive_permission_group_permissions(request):
 	body = request.body.decode('utf-8')
 	try:
 		json_body = json.loads(body)
+		# Clean up all existing groups and accept only incoming ones.
+		Group.objects.all().delete()
 		for item in json_body:
 			group, created = Group.objects.get_or_create(name=item)
 			group.permissions.clear()

@@ -12,7 +12,7 @@ class PermissionAdminConfig(AppConfig):
         self.fetch_and_set_site_dropdown()
 
     def fetch_and_set_site_dropdown(self):
-        API_URL = "https://make-auth.com/api/v1/"
+        API_URL = "https://make-auth.com/api/v1/site_dropdown/"
         CACHE_KEY = "site_dropdown_data"
         CACHE_TIMEOUT = 3600
 

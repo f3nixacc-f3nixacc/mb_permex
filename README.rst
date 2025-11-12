@@ -9,10 +9,10 @@ Quick start
 
 1. Add "XXX" to your INSTALLED_APPS settings like this::
 
-    INSTALLED_APPS = [
-        ...
-        'XXX',
-    ]
+INSTALLED_APPS = [
+    ...
+    'XXX',
+]
 
 2. Add "SITE_DROPDOWN" to your UNFOLD settings like this:
 

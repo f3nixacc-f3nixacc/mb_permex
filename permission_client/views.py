@@ -12,7 +12,9 @@ def get_user_groups(request):
 	body = request.body.decode('utf-8')
 	try:
 		json_body = json.loads(body)
-		user = User.objects.get(username=json_body["user"])
+		user = User.objects.filter(username=json_body["user"]).first()
+		if user is None:
+			return JsonResponse({"success": False, "error": "User not found"}, status=404)
 		user.groups.clear()
 		for group in json_body["groups"]:
 			group, created = Group.objects.get_or_create(name=group)
